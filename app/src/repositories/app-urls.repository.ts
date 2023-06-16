@@ -1,6 +1,5 @@
 import { v4 as uuid } from "uuid";
 import { AppURL } from "../components/UrlForm";
-import { blobToBase64 } from "../utils/file";
 import Storage from "./storage";
 
 class AppUrlRepository {
@@ -62,14 +61,6 @@ class AppUrlRepository {
     });
   }
 
-  async fetchAndUpdateAppUrlFavicon(data: AppURL) {
-    const faviconUrl = await this.getFaviconBase64(data.url);
-    if (faviconUrl) {
-      data.originalFaviconUrl = faviconUrl;
-      await this.update(data);
-    }
-  }
-
   async delete(id: string): Promise<void> {
     const appUrls = await this.findAll();
 
@@ -92,45 +83,6 @@ class AppUrlRepository {
     };
 
     return appUrls;
-  }
-
-  private async getFaviconBase64(url: string) {
-    const favIconUrl = await this.getUrlIconFromPage(url);
-
-    if (!favIconUrl) return;
-
-    const blob = await fetch(favIconUrl).then((res) => res.blob());
-    return blobToBase64(blob);
-  }
-
-  private async getUrlIconFromPage(url: string) {
-    try {
-      const htmlData = await fetch(url).then((res) => res.text());
-
-      const parser = new DOMParser();
-      const html = parser.parseFromString(htmlData, "text/html");
-
-      const link = html.querySelector<HTMLLinkElement>('link[rel="icon"]');
-      if (!link) return;
-
-      const linkHref = link.href;
-
-      if (linkHref.includes(location.origin)) {
-        const [, relativeHref] = linkHref.split(location.origin);
-
-        if (!relativeHref) return;
-
-        const normalizedUrl = url.endsWith("/")
-          ? url.slice(0, url.length - 1)
-          : url;
-
-        return normalizedUrl.concat(relativeHref);
-      }
-
-      return linkHref;
-    } catch (error) {
-      return;
-    }
   }
 }
 

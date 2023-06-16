@@ -18,8 +18,6 @@ const createInitialAppUrl = (appId: string): AppURL => ({
   env: "",
   url: "",
   id: "",
-  faviconUrl: "",
-  originalFaviconUrl: "",
 });
 
 export const App = () => {
@@ -61,7 +59,6 @@ export const App = () => {
 
     try {
       const app = await appUrlRepository.create(appUrl);
-      await appUrlRepository.fetchAndUpdateAppUrlFavicon(app);
       await loadAppUrls();
       setAppUrl(createInitialAppUrl(app.id));
       setShowForm(false);
@@ -74,7 +71,7 @@ export const App = () => {
     if (!validateAppUrl(app)) return;
 
     try {
-      await appUrlRepository.fetchAndUpdateAppUrlFavicon(app);
+      await appUrlRepository.update(app);
       await loadAppUrls();
     } catch (error) {
       console.log(error);

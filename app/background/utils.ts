@@ -13,39 +13,7 @@ export async function createMarkupOnPage(tabId: number) {
 
     await injectMarkuOnPage(tabId, appUrl);
     await setBadge(tabId, appUrl);
-
-    if (appUrl.faviconUrl) {
-      await changeFavicon(tabId, appUrl.faviconUrl);
-    } else {
-      await changeFavicon(tabId, appUrl.originalFaviconUrl);
-    }
   }
-}
-
-function setFaviconOnPage(faviconUrl: string) {
-  const favs = Array.from(
-    document.querySelectorAll('link[rel="icon"]')
-  ) as HTMLLinkElement[];
-
-  if (favs.length) {
-    favs.forEach((fav) => {
-      const favicon = document.createElement("link");
-      if (!faviconUrl) return;
-
-      favicon.rel = "icon";
-      favicon.href = faviconUrl;
-
-      document.head.replaceChild(favicon, fav);
-    });
-  }
-}
-
-async function changeFavicon(tabId: number, faviconUrl: string) {
-  await chrome.scripting.executeScript({
-    target: { tabId: tabId },
-    func: setFaviconOnPage,
-    args: [faviconUrl],
-  });
 }
 
 async function setBadge(tabId: number, appUrl: AppURL) {

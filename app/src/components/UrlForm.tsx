@@ -1,9 +1,7 @@
 import { CheckIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import appUrlRepository from "../repositories/app-urls.repository";
-import { blobToBase64 } from "../utils/file";
 import { ColorPicker } from "./Colorpicker";
-import { Uploader } from "./Uploader";
 
 export type AppURL = {
   id: string;
@@ -11,8 +9,6 @@ export type AppURL = {
   url: string;
   env: string;
   color: string;
-  faviconUrl: string | null;
-  originalFaviconUrl: string;
 };
 
 type CreateAppUrlFormProps = {
@@ -31,16 +27,16 @@ export const CreateAppUrlForm: React.FC<CreateAppUrlFormProps> = ({
   onSubmit,
 }) => {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-center">
       <input
-        className="w-2/3"
+        className="w-3/5"
         type="text"
         placeholder="url"
         value={data.url}
         onChange={(ev) => onChange({ ...data, url: ev.target.value })}
       />
 
-      <div className="h-9 w-1/3 rounded-md bg-zinc-700 relative">
+      <div className="h-9 w-2/5 rounded-md bg-zinc-700 relative">
         <input
           className="absolute w-full"
           type="text"
@@ -97,18 +93,8 @@ export const EditAppUrlForm: React.FC<EditAppUrlFormProps> = ({
     }
   };
 
-  const handleFaviconUpload = async (file: Blob | null) => {
-    try {
-      const faviconUrl = file ? await blobToBase64(file) : null;
-      onChange({ ...data, faviconUrl });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <div className="flex gap-2 items-center">
-      <Uploader onChange={handleFaviconUpload} data={data} />
       <input
         className="w-3/5"
         type="text"
@@ -119,7 +105,7 @@ export const EditAppUrlForm: React.FC<EditAppUrlFormProps> = ({
 
       <div className="h-9 w-2/5 rounded-md bg-zinc-700 relative">
         <input
-          className="absolute w-full"
+          className="absolute w-full shrink-0"
           type="text"
           placeholder="env"
           defaultValue={data.env}
