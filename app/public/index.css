@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  height: 360px;
+  background: #2B2D31;
+  @apply text-gray-300
+  }
+
+#app {
+  height: 100%;
+}
+
+input {
+  @apply h-9 bg-zinc-700 p-2.5 rounded-md outline-none;
+}
+
+button.primary {
+  @apply 
+    bg-blue-500 
+    p-2 
+    rounded-md 
+    font-semibold 
+    text-gray-100 
+    flex 
+    h-9 
+    items-center 
+    justify-center 
+    shadow-md 
+    hover:opacity-90 
+    disabled:opacity-50 
+    duration-200
+}

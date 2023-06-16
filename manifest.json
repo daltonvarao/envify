@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Envify - Gerenciador de ambientes",
+  "version": "0.0.1",
+  "description": "Cadastre e identifique rapidamente os ambientes do seu site",
+  "action": {
+    "default_title": "Envify",
+    "default_popup": "dist/index.html",
+    "icons": {
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "css": [
+        "app/public/markup.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "commands": {
+    "open-envify": {
+      "description": "Open envify",
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      }
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

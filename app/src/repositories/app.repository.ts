@@ -1,0 +1,43 @@
+import { v4 as uuid } from "uuid";
+import appUrlRepository from "./app-urls.repository";
+import Storage from "./storage";
+
+export type IApp = {
+  id: string;
+  name: string;
+};
+
+export class AppRepository {
+  private readonly storage = new Storage();
+
+  async create(name: string): Promise<void> {
+    const apps = await this.find();
+
+    this.storage.save({ apps: [...apps, { name, id: uuid() }] });
+  }
+
+  async find(): Promise<IApp[]> {
+    const { apps } = await this.storage.find({ apps: [] });
+
+    return apps;
+  }
+
+  async findOne(id: string): Promise<IApp | undefined> {
+    const apps = await this.find();
+
+    const app = apps.find((item) => item.id === id);
+
+    return app;
+  }
+
+  async delete(id: string) {
+    const apps = await this.find();
+
+    await appUrlRepository.deleteByAppId(id);
+    await this.storage.save({ apps: [...apps.filter((app) => app.id !== id)] });
+  }
+}
+
+const appRepository = new AppRepository();
+
+export default appRepository;

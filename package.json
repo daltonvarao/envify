@@ -1,0 +1,40 @@
+{
+  "name": "envify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn webpack --watch ",
+    "build": "yarn webpack --mode=production &&  ./build.sh"
+  },
+  "dependencies": {
+    "@types/uuid": "^9.0.1",
+    "typescript": "^5.0.4",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@headlessui/react": "^1.7.15",
+    "@heroicons/react": "^2.0.18",
+    "@types/chrome": "^0.0.237",
+    "@types/react": "^18.2.7",
+    "@types/react-color": "^3.0.6",
+    "@types/react-dom": "^18.2.4",
+    "@types/styled-components": "^5.1.26",
+    "autoprefixer": "^10.4.14",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.1",
+    "postcss": "^8.4.24",
+    "postcss-loader": "^7.3.2",
+    "react": "^18.2.0",
+    "react-color": "^2.19.3",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.9.0",
+    "react-router-dom": "^6.11.2",
+    "style-loader": "^3.3.3",
+    "styled-components": "^5.3.11",
+    "tailwindcss": "^3.3.2",
+    "ts-loader": "^9.4.3",
+    "webpack": "^5.84.1",
+    "webpack-cli": "^5.1.1"
+  }
+}
