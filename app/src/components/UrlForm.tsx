@@ -36,7 +36,7 @@ export const CreateAppUrlForm: React.FC<CreateAppUrlFormProps> = ({
         onChange={(ev) => onChange({ ...data, url: ev.target.value })}
       />
 
-      <div className="h-9 w-2/5 rounded-md bg-zinc-700 relative">
+      <div className="h-9 w-24 rounded-md bg-zinc-700 relative">
         <input
           className="absolute w-full"
           type="text"
@@ -103,7 +103,7 @@ export const EditAppUrlForm: React.FC<EditAppUrlFormProps> = ({
         onChange={(ev) => onChange({ ...data, url: ev.target.value })}
       />
 
-      <div className="h-9 w-2/5 rounded-md bg-zinc-700 relative">
+      <div className="h-9 w-24 rounded-md bg-zinc-700 relative">
         <input
           className="absolute w-full shrink-0"
           type="text"

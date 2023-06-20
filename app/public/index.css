@@ -20,7 +20,13 @@ body {
 }
 
 input {
-  @apply h-9 bg-zinc-700 p-2.5 rounded-md outline-none;
+  @apply 
+    h-9 
+    bg-zinc-700 
+    p-2.5 
+    rounded-md 
+    text-xs
+    outline-none;
 }
 
 button.primary {
@@ -28,7 +34,7 @@ button.primary {
     bg-blue-500 
     p-2 
     rounded-md 
-    font-semibold 
+    text-xs
     text-gray-100 
     flex 
     h-9 

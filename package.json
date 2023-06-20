@@ -15,6 +15,7 @@
   "devDependencies": {
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "@tailwindcss/jit": "^0.1.18",
     "@types/chrome": "^0.0.237",
     "@types/react": "^18.2.7",
     "@types/react-color": "^3.0.6",

@@ -30,6 +30,23 @@ export class AppRepository {
     return app;
   }
 
+  async update(data: IApp): Promise<void> {
+    const apps = await this.find();
+
+    const appIndex = apps.findIndex((item: IApp) => item.id === data.id);
+
+    if (appIndex < 0) return;
+
+    apps[appIndex] = {
+      ...apps[appIndex],
+      ...data,
+    };
+
+    await this.storage.save({
+      apps,
+    });
+  }
+
   async delete(id: string) {
     const apps = await this.find();
 

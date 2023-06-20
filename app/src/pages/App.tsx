@@ -2,14 +2,13 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { OptionsMenu } from "../components/OptionsMenu";
 import {
   AppURL,
   CreateAppUrlForm,
   EditAppUrlForm,
 } from "../components/UrlForm";
 import appUrlRepository from "../repositories/app-urls.repository";
-import appRepository, { IApp } from "../repositories/app.repository";
+import { IApp } from "../repositories/app.repository";
 import { debounce } from "../utils/debounce";
 
 const createInitialAppUrl = (appId: string): AppURL => ({
@@ -38,19 +37,6 @@ export const App = () => {
       setAppUrls(data);
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const deleteApp = async () => {
-    if (!confirm("deseja remover este item?")) return;
-
-    try {
-      await appRepository.delete(app.id);
-      navigate("/", {
-        replace: true,
-      });
-    } catch (err) {
-      console.error(err);
     }
   };
 
@@ -84,10 +70,8 @@ export const App = () => {
 
   return (
     <div className="h-full flex flex-col justify-between pb-6">
-      <OptionsMenu options={[{ label: "Deletar", onClick: deleteApp }]} />
-
       <div className="flex-1">
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg">{app.name}</h2>
         </div>
 
@@ -119,7 +103,7 @@ export const App = () => {
           showForm ? "bg-gray-500" : "bg-blue-500"
         }`}
       >
-        {showForm ? "Cancelar" : <PlusIcon className="w-4 h-4 stroke-2" />}
+        {showForm ? "Cancel" : <PlusIcon className="w-4 h-4 stroke-2" />}
       </button>
     </div>
   );
