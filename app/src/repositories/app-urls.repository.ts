@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { AppURL } from "../components/UrlForm";
+import { AppURL } from "../../common/app-url.type";
 import Storage from "./storage";
 
 class AppUrlRepository {
@@ -27,7 +27,7 @@ class AppUrlRepository {
     return appUrl;
   }
 
-  async create(data: AppURL): Promise<AppURL> {
+  async create(data: Omit<AppURL, "id">): Promise<AppURL> {
     const appUrls = await this.findAll();
 
     const app = {

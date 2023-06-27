@@ -32,23 +32,19 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   return (
     <div
       ref={pickerRef}
-      className="h-6 w-6 rounded-lg cursor-pointer hover:brightness-105 duration-200"
+      className="h-full rounded w-full cursor-pointer duration-200"
       style={{ background: value }}
       onClick={() => {
-        if (!showSwatch) {
-          setShowSwatch(true);
-        }
+        setShowSwatch((state) => !state);
       }}
     >
       {showSwatch && (
-        <div className="grid grid-flow-col gap-1 p-2 rounded-md shadow-sm -top-2 items-center justify-between absolute transition-all right-7 bg-zinc-700 border border-gray-600">
+        <div className="grid grid-flow-col gap-1 p-2 rounded-md shadow-sm -top-2 items-center justify-between absolute transition-all right-8 dark:bg-zinc-700 bg-zinc-100 border dark:border-zinc-600">
           {colors.map((color) => {
             return (
               <div
                 key={color}
-                className={`
-                  h-6 w-6 cursor-pointer hover:shadow-md rounded-lg hover:scale-110 duration-200 flex items-center justify-center
-                `}
+                className="h-6 w-6 cursor-pointer hover:shadow-md rounded-lg hover:scale-110 duration-200 flex items-center justify-center"
                 style={{ background: color }}
                 onClick={() => handleSelect(color)}
               >

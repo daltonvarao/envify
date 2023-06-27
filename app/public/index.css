@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
 
 * {
   padding: 0;
@@ -10,10 +11,15 @@
 
 body {
   width: 360px;
-  height: 360px;
-  background: #2B2D31;
-  @apply text-gray-300
-  }
+  height: 420px;
+  min-height: 420px;
+  font-family: -apple-system,'Montserrat', sans-serif;
+  @apply 
+  dark:bg-zinc-800 
+  dark:text-zinc-200 
+  bg-zinc-50
+  text-zinc-600
+}
 
 #app {
   height: 100%;
@@ -22,11 +28,15 @@ body {
 input {
   @apply 
     h-9 
-    bg-zinc-700 
+    dark:bg-zinc-700 
+    bg-zinc-200
+    dark:text-zinc-300
+    text-zinc-600
     p-2.5 
     rounded-md 
+    outline-none
     text-xs
-    outline-none;
+    font-medium;
 }
 
 button.primary {
@@ -35,7 +45,7 @@ button.primary {
     p-2 
     rounded-md 
     text-xs
-    text-gray-100 
+    text-white
     flex 
     h-9 
     items-center 
@@ -44,4 +54,4 @@ button.primary {
     hover:opacity-90 
     disabled:opacity-50 
     duration-200
-}
+} 

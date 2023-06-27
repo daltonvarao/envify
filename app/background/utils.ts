@@ -1,4 +1,4 @@
-import { AppURL } from "../src/components/UrlForm";
+import { AppURL } from "../common/app-url.type";
 import appUrlRepository from "../src/repositories/app-urls.repository";
 
 export async function createMarkupOnPage(tabId: number) {
@@ -8,6 +8,7 @@ export async function createMarkupOnPage(tabId: number) {
     const appUrl = await getAppUrl(tab.url!);
 
     if (!appUrl) {
+      await removeBadge(tabId);
       return removeMarkupFromPage(tabId);
     }
 
@@ -22,6 +23,15 @@ async function setBadge(tabId: number, appUrl: AppURL) {
     tabId,
   });
   await chrome.action.setBadgeBackgroundColor({ color: appUrl.color });
+}
+
+async function removeBadge(tabId: number) {
+  await chrome.action.setBadgeText({
+    text: "",
+    tabId,
+  });
+
+  await chrome.action.setBadgeBackgroundColor({ color: "rgba(0,0,0,0)" });
 }
 
 async function injectMarkuOnPage(tabId: number, appUrl: AppURL) {

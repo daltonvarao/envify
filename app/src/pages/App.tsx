@@ -1,53 +1,63 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppURL } from "../../common/app-url.type";
 import {
-  AppURL,
-  CreateAppUrlForm,
-  EditAppUrlForm,
-} from "../components/UrlForm";
+  CreateAppURL,
+  CreateAppUrlFormModal,
+} from "../components/CreateAppUrl";
+import { EditAppUrlForm } from "../components/EditAppUrlForm";
 import appUrlRepository from "../repositories/app-urls.repository";
-import { IApp } from "../repositories/app.repository";
+import appRepository, { IApp } from "../repositories/app.repository";
 import { debounce } from "../utils/debounce";
 
-const createInitialAppUrl = (appId: string): AppURL => ({
-  color: "#37D67A",
-  appId,
-  env: "",
-  url: "",
-  id: "",
-});
-
 export const App = () => {
-  const app = useLoaderData() as IApp;
+  const { id } = useParams();
   const navigate = useNavigate();
 
+  const [app, setApp] = useState<IApp>();
   const [appUrls, setAppUrls] = useState<AppURL[]>();
-  const [appUrl, setAppUrl] = useState<AppURL>(createInitialAppUrl(app.id));
-  const [showForm, setShowForm] = useState(false);
+  const [showCreateAppUrlModal, setShowCreateAppUrlModal] = useState(false);
 
-  const validateAppUrl = (data: AppURL) => {
+  const validateAppUrl = (data: CreateAppURL) => {
     return data.url && data.env;
   };
 
   const loadAppUrls = async () => {
     try {
-      const data = await appUrlRepository.find(app.id);
+      const data = await appUrlRepository.find(app!.id);
       setAppUrls(data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleCreateNewAppUrl = async () => {
+  const loadApp = useCallback(async () => {
+    if (!id) {
+      navigate("/");
+      return;
+    }
+
+    try {
+      const data = await appRepository.findOne(id);
+      setApp(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [id]);
+
+  const handleCreateNewAppUrl = async (appUrl: CreateAppURL) => {
     if (!validateAppUrl(appUrl)) return;
 
     try {
-      const app = await appUrlRepository.create(appUrl);
+      await appUrlRepository.create({
+        color: appUrl.color,
+        env: appUrl.env,
+        url: appUrl.url,
+        appId: id!,
+      });
       await loadAppUrls();
-      setAppUrl(createInitialAppUrl(app.id));
-      setShowForm(false);
+      setShowCreateAppUrlModal(false);
     } catch (error) {
       console.error(error);
     }
@@ -65,14 +75,28 @@ export const App = () => {
   }, 100);
 
   useEffect(() => {
-    loadAppUrls();
+    loadApp();
   }, []);
 
+  useEffect(() => {
+    if (app?.id) {
+      loadAppUrls();
+    }
+  }, [app]);
+
+  if (!app) return null;
+
   return (
-    <div className="h-full flex flex-col justify-between pb-6">
+    <div className="flex flex-col justify-between">
+      <CreateAppUrlFormModal
+        show={showCreateAppUrlModal}
+        onClose={() => setShowCreateAppUrlModal(false)}
+        onCreate={(app) => handleCreateNewAppUrl(app)}
+      />
+
       <div className="flex-1">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg">{app.name}</h2>
+          <h2 className="text-lg font-semibold">{app.name}</h2>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -86,24 +110,20 @@ export const App = () => {
               />
             );
           })}
-
-          {showForm && (
-            <CreateAppUrlForm
-              data={appUrl}
-              onChange={(app) => setAppUrl(app)}
-              onSubmit={handleCreateNewAppUrl}
-            />
-          )}
         </div>
       </div>
 
       <button
-        onClick={() => setShowForm((state) => !state)}
-        className={`h-9 rounded-md flex items-center justify-center text-gray-100 hover:opacity-90 ${
-          showForm ? "bg-gray-500" : "bg-blue-500"
+        onClick={() => setShowCreateAppUrlModal((state) => !state)}
+        className={`h-9 rounded-md flex items-center justify-center text-zinc-50 hover:opacity-90 fixed bottom-6 left-6 right-6 ${
+          showCreateAppUrlModal ? "bg-zinc-500" : "bg-blue-500"
         }`}
       >
-        {showForm ? "Cancel" : <PlusIcon className="w-4 h-4 stroke-2" />}
+        {showCreateAppUrlModal ? (
+          "Cancel"
+        ) : (
+          <PlusIcon className="w-4 h-4 stroke-2" />
+        )}
       </button>
     </div>
   );
