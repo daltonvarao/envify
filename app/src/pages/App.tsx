@@ -1,7 +1,7 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppURL } from "../../common/app-url.type";
+import { AppURL } from "../../types/app-url.type";
 import {
   CreateAppURL,
   CreateAppUrlFormModal,

@@ -1,6 +1,6 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import React from "react";
-import { AppURL } from "../../common/app-url.type";
+import { AppURL } from "../../types/app-url.type";
 import appUrlRepository from "../repositories/app-urls.repository";
 import { ColorPicker } from "./Colorpicker";
 

@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "yarn webpack --watch ",
-    "build": "yarn webpack --mode=production &&  ./build.sh"
+    "build": "yarn webpack --mode=production && ./build.sh"
   },
   "dependencies": {
     "@types/uuid": "^9.0.1",
@@ -22,6 +22,7 @@
     "@types/react-dom": "^18.2.4",
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.14",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.1",

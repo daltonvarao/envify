@@ -1,4 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
 const path = require("path");
 
 module.exports = {
@@ -19,6 +21,9 @@ module.exports = {
       cache: true,
       inject: "body",
       chunks: ["app"],
+    }),
+    new CopyPlugin({
+      patterns: [{ from: "./app/public/markup.css", to: "./markup.css" }],
     }),
   ],
   module: {

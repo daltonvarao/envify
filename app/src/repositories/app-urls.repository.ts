@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { AppURL } from "../../common/app-url.type";
+import { AppURL } from "../../types/app-url.type";
 import Storage from "./storage";
 
 class AppUrlRepository {

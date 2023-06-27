@@ -1,5 +1,5 @@
-import { AppURL } from "../common/app-url.type";
 import appUrlRepository from "../src/repositories/app-urls.repository";
+import { AppURL } from "../types/app-url.type";
 
 export async function createMarkupOnPage(tabId: number) {
   const tab = await getTab(tabId);

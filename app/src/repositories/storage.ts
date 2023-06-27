@@ -8,6 +8,10 @@ export class Storage {
   async find(data: Record<string, any>) {
     return await this.repository.get(data);
   }
+
+  async delete(key: string) {
+    await chrome.storage.local.remove(key);
+  }
 }
 
 export default Storage;

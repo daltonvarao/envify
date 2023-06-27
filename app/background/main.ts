@@ -1,3 +1,4 @@
+import { migrateToApp } from "./migrate-to-app";
 import { createMarkupOnPage } from "./utils";
 
 chrome.storage.local.onChanged.addListener(async () => {
@@ -17,4 +18,11 @@ chrome.tabs.onActivated.addListener(async ({ tabId }) => {
 
 chrome.tabs.onUpdated.addListener(async (tabId) => {
   await createMarkupOnPage(tabId);
+});
+
+chrome.runtime.onInstalled.addListener(async (info) => {
+  switch (info.reason) {
+    case chrome.runtime.OnInstalledReason.UPDATE:
+      await migrateToApp();
+  }
 });

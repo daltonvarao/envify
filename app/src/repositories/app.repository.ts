@@ -10,10 +10,11 @@ export type IApp = {
 export class AppRepository {
   private readonly storage = new Storage();
 
-  async create(name: string): Promise<void> {
+  async create(name: string): Promise<IApp> {
     const apps = await this.find();
-
-    this.storage.save({ apps: [...apps, { name, id: uuid() }] });
+    const app = { name, id: uuid() };
+    await this.storage.save({ apps: [...apps, app] });
+    return app;
   }
 
   async find(): Promise<IApp[]> {
