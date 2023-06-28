@@ -29,6 +29,9 @@ class AppStateRepository {
     await this.storage.delete("appState");
   }
 
+  /**
+   * @deprecated only for test - should be removed soon
+   */
   async mock() {
     const appState: AppState = {
       appState: {
@@ -55,4 +58,7 @@ class AppStateRepository {
 
 const appStateRepository = new AppStateRepository();
 
+/**
+ * @deprecated only for recovery - should be removed on v0.5.0
+ */
 export default appStateRepository;
